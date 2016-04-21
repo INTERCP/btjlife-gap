@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.btjkorea.btjlife"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.btjkorea.btjlife"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.btjkorea.btjlife"
+        }
+    },
+    "dependent_plugins": {}
+}
