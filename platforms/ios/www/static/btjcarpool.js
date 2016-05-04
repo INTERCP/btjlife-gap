@@ -341,7 +341,7 @@ $( "#btjcarpool-myapply-list" ).on( "pageshow", function( event ) {
         }
 
         inner_html += "<li>[" + ride['origin'] + "] -> [" + ride['destination'] + "] ";
-        inner_html += timeArr[0] + "시 " + timeArr[1] + "분 " + ride['driver_name'] + "<div style='float: right;'>" + approved_text + "</div></li>";
+        inner_html += timeArr[0] + "시 " + timeArr[1] + "분 " + ride['driver_name'] + "<div style='float: right;'>" + approved_text + " <a href='#'>신청취소</a></div></li>";
       }
 
       inner_html += "</ul>";
