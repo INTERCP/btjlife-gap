@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="static/vendor/jquerymobile/jquery.mobile-1.4.5.min.css" />
+
+  <title>BTJ 라이프</title>
+</head>
+<body>
+  <div class="app">
+    <!-- page: home -->
+    <div data-role="page" id="home">
+      <div data-role="header" data-position="fixed">
+        <h1>BTJ라이프</h1>
+        <a href="#right" class="ui-btn ui-corner-all  ui-btn-right ui-btn-icon-notext ui-icon-bars">메뉴</a>
+      </div>
+      <div role="main" class="ui-content">
+        <ul data-role="listview" data-inset="true">
+          <!-- 신청 가능한 카풀 목록 5개 보여주기. 없으면 없다고 표시 -->
+          <li><a href="btjcarpool/ridelist.html">카풀</a></li>
+          <li>
+            <ul data-role="listview" id="home-carpool-ridelist-result">
+              <li>신청 가능한 카풀이 없습니다.</li>
+            </ul>
+          </li>
+        </ul>
+        <ul data-role="listview" data-inset="true">
+          <li><a href="btjcarpool/myridelist.html">나의 카풀 운행</a></li>
+          <li>
+            <ul data-role="listview" id="home-carpool-myride-list">
+              <li>예정중인 카풀 운행이 없습니다.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- page: home -->
+
+    <!-- page: login -->
+    <div data-role="page" id="login">
+      <div data-role="header" data-position="fixed">
+        <h1>BTJ라이프</h1>
+      </div>
+      <div role="main" class="ui-content">
+        <form name="loginform">
+          아이디: <input name="userid" type="text"/>
+          비밀번호: <input name="password" type="password"/><br/>
+          <a href="#" onclick="login();" class="ui-btn ui-corner-all">로그인</a>
+        </form>
+      </div>
+    </div>
+    <!-- page: login -->
+
+    <!-- panel: left -->
+    <div data-role="panel" id="right" data-position="right" data-display="push" data-theme="a">
+      <div class="ui-panel-inner">
+        <p>
+          <a href="#home" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-left ui-icon-home">홈</a>
+          <a href="#" onclick="logout();" class="ui-btn ui-corner-all ui-btn-inline ui-mini  ui-btn-icon-left ui-icon-power">로그아웃</a>
+        </p>
+        <div data-role="collapsibleset" data-theme="a">
+          <div data-role="collapsible">
+            <h2>BTJ카풀</h2>
+            <ul data-role="listview">
+              <li><a href="btjcarpool/regride.html">운행 등록</a></li>
+              <li><a href="btjcarpool/ridelist.html">이용 신청</a></li>
+              <li><a href="btjcarpool/myridelist.html">나의 운행 현황</a></li>
+              <li><a href="btjcarpool/myapplylist.html">나의 카풀신청 현황</a></li>
+            </ul>
+          </div>
+        </div>
+
+
+        <!--
+        <ul data-role="listview">
+          <li><a href="btjcarpool/home.html">BTJ카풀</a></li>
+          <li><a href="#" class="bonbu ui-state-disabled">BTJ셔틀</a></li>
+          <li><a href="#" class="bonbu ui-state-disabled">본부간사운영체계</a></li>
+          <li><a href="#" class="bonbu ui-state-disabled">본부간사식수파악</a></li>
+          <li><a href="#" class="bonbu ui-state-disabled">본부사무실 열쇠관리</a></li>
+        </ul>
+        -->
+      </div>
+    </div>
+    <!-- panel: left -->
+  </div>
+  <!-- app -->
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="static/vendor/jquery/jquery-1.12.3.min.js"></script>
+  <script type="text/javascript" src="static/vendor/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+  <script type="text/javascript" src="static/btjlife.js"></script>
+  <script type="text/javascript" src="static/btjcarpool.js"></script>
+  <script type="text/javascript" src="static/nativedatepicker.js"></script>
+</body>
+</html>

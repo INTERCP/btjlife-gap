@@ -1,0 +1,88 @@
+<!-- 카풀-운행 등록하기 -->
+<!-- page: btjcarpool-editride -->
+<div data-role="page" id="btjcarpool-editride">
+  <div data-role="header" data-position="fixed">
+    <h1>운행 편집</h1>
+    <a href="#right" class="ui-btn ui-corner-all  ui-btn-right ui-btn-icon-notext ui-icon-bars">메뉴</a>
+  </div>
+  <div role="main" class="ui-content">
+    <form name="editform">
+      출발지:
+      <input name="origin" type="text"/><br/>
+      목적지:
+      <input name="destination" type="text"/><br/>
+      출발날자:
+      <!-- 아이폰의 경우 type="date"에 반응함, 안드로이드의 경우 class="datepicker"를 통해 플러그인으로 연결 -->
+      <!-- 아래 script 블록 참조 -->
+      <input name="departure_date" type="date" data-role="date" class="datepicker"/><br/>
+      출발시간:
+      <select name="departure_hour">
+        <option value="00">자정</option>
+        <option value="01">오전 1시</option>
+        <option value="02">오전 2시</option>
+        <option value="03">오전 3시</option>
+        <option value="04">오전 4시</option>
+        <option value="05">오전 5시</option>
+        <option value="06">오전 6시</option>
+        <option value="07">오전 7시</option>
+        <option value="08">오전 8시</option>
+        <option value="09">오전 9시</option>
+        <option value="10">오전 10시</option>
+        <option value="11">오전 11시</option>
+
+        <option value="12">정오</option>
+        <option value="13">오후 1시</option>
+        <option value="14">오후 2시</option>
+        <option value="15">오후 3시</option>
+        <option value="16">오후 4시</option>
+        <option value="17">오후 5시</option>
+        <option value="18">오후 6시</option>
+        <option value="19">오후 7시</option>
+        <option value="20">오후 8시</option>
+        <option value="21">오후 9시</option>
+        <option value="22">오후 10시</option>
+        <option value="23">오후 11시</option>
+      </select>
+      <select name="departure_minute">
+        <option value="00">정각</option>
+        <option value="15">15분</option>
+        <option value="30">30분</option>
+        <option value="45">45분</option>
+      </select>
+      탑승가능인원: <input name="capacity" type="text"/><br/>
+      운전자: <input name="driver_name" type="text"/><br/>
+      운전자 성별: <select name="driver_sex"><option value="남자">남자</option><option value="여자">여자</option></select>
+      운전자연락처: <input name="driver_hp" type="text"/><br/>
+      운행목적: <input name="purpose" type="text"/><br/>
+      <input type="hidden" name="register_id" value=""/>
+      <a href="" onclick="carpoolSubmitEditform();" class="ui-btn ui-corner-all">등록</a>
+    </form>
+  </div>
+  <script>
+  // 운행 등록 페이지
+  $( "#btjcarpool-editride" ).on( "pageshow", function( event ) {
+    $.get(base_url + "ride/" + ride_idx, function(ride) {
+      $("input[name='origin']").val(ride['origin']);
+      $("input[name='destination']").val(ride['destination']);
+      var departure_at = ride['departure_at'];
+      var departure_date = getDate(departure_at);
+      var hour = getHour(departure_at);
+      var minute = getMinute(departure_at);
+      $("input[name='departure_date']").val(departure_date);
+
+      $("select[name='departure_hour']").val(hour);
+      $("select[name='departure_minute']").val(minute);
+      $("input[name='capacity']").val(ride['capacity']);
+      $("input[name='driver_name']").val(ride['driver_name']);
+      $("input[name='driver_hp']").val(ride['driver_hp']);
+      $("select[name='driver_sex']").val(ride['driver_sex']);
+      $("input[name='purpose']").val(ride['purpose']);
+
+      $('select').selectmenu('refresh');
+    }).error(ajaxError);
+
+    $("form[name='editform']").enhanceWithin();
+  });
+  </script>
+</div>
+<!-- page: btjcarpool-regride -->

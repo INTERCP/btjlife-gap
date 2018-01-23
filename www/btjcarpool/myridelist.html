@@ -1,0 +1,22 @@
+<!-- 카풀-나의 운행 현황 -->
+<!-- page: btjcarpool-myride-list -->
+<div data-role="page" id="btjcarpool-myride-list">
+  <div data-role="header" data-position="fixed">
+    <a href="#home" class="ui-btn ui-corner-all  ui-btn-left ui-btn-icon-notext ui-icon-arrow-l">뒤로</a>
+    <h1>나의 운행 현황</h1>
+    <a href="#right" class="ui-btn ui-corner-all  ui-btn-right ui-btn-icon-notext ui-icon-bars">메뉴</a>
+  </div>
+  <div role="main" class="ui-content">
+    <ul data-role="listview" id="myride-list-result"></ul>
+  </div>
+  <script>
+  // 이용신청하기 (운행 목록) 페이지
+  $( "#btjcarpool-myride-list" ).on( "pageshow", function( event ) {
+    resultContainer = "#myride-list-result";
+    bindFunc = to_myride;
+    getListItem = getMyRideListItem;
+    $.get(base_url + "rides", {"name": name, "hp":hp, "register_id":localStorage.userid}, proccessRideList).error(ajaxError);
+  });
+  </script>
+</div>
+<!-- page: btjcarpool-myride-list -->

@@ -1,0 +1,49 @@
+<!-- 카풀-이용신청(운행 상세) -->
+<!-- page: btjcarpool-ride -->
+<div data-role="page" id="btjcarpool-ride">
+  <div data-role="header" data-position="fixed">
+    <a href="ridelist.html" class="ui-btn ui-corner-all  ui-btn-left ui-btn-icon-notext ui-icon-arrow-l">뒤로</a>
+    <h1>운행 이용 신청</h1>
+    <a href="#right" class="ui-btn ui-corner-all  ui-btn-right ui-btn-icon-notext ui-icon-bars">메뉴</a>
+  </div>
+  <div role="main" class="ui-content">
+    <div id="ride-result"></div>
+    <form name="applyform">
+      <input type="hidden" name="ride_idx" value="" />
+      이름: <input name="name" type="text"/><br/>
+      성별: <select name="sex"><option value="남자">남자</option><option value="여자">여자</option></select>
+      연락처: <input name="hp" type="text"/><br/>
+      <input type="hidden" name="memo" value="" />
+      <a href="" onclick="submit_applyform();" class="ui-btn ui-corner-all">카풀 신청하기</a>
+    </form>
+  </div>
+  <script>
+  // 이용 신청하기(운행 상세) 페이지
+  $( "#btjcarpool-ride" ).on( "pageshow", function( event ) {
+    if(typeof name != 'undefined') {
+      $("input[name='name']").val(name);
+    }
+
+    if(typeof hp != 'undefined') {
+      $("input[name='hp']").val(hp);
+    }
+
+    if(typeof sex != 'undefined') {
+      $("input[name='sex']").val(sex);
+    }
+
+    if(typeof ride_idx != 'undefined') {
+      $("input[name='ride_idx']").val(ride_idx);
+    }
+
+    $("form[name='applyform']").enhanceWithin();
+
+    $.get(base_url + "ride/" + ride_idx, function(ride) {
+      var inner_html = getRideData(ride);
+      $('#ride-result').html(inner_html);
+      $('#ride-result').enhanceWithin();
+    }).error(ajaxError);
+  });
+  </script>
+</div>
+<!-- page: btjcarpool-ride -->

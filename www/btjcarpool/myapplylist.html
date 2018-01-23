@@ -1,0 +1,62 @@
+<!-- 카풀-나의 카풀신청 현황 -->
+<!-- page: btjcarpool-myapply-list -->
+<div data-role="page" id="btjcarpool-myapply-list">
+  <div data-role="header" data-position="fixed">
+    <a href="#home" class="ui-btn ui-corner-all  ui-btn-left ui-btn-icon-notext ui-icon-arrow-l">뒤로</a>
+    <h1>나의 카풀신청 현황</h1>
+    <a href="#right" class="ui-btn ui-corner-all  ui-btn-right ui-btn-icon-notext ui-icon-bars">메뉴</a>
+  </div>
+  <div role="main" class="ui-content">
+    <div id="myapplylist-result"></div>
+  </div>
+  <script>
+  // 나의 카풀신청 현황
+  $( "#btjcarpool-myapply-list" ).on( "pageshow", function( event ) {
+    $.get(base_url + "rides", {"passenger_name": name, "passenger_hp":hp, "register_id": localStorage.userid},
+      function(data) {
+        var rides = data['rides'];
+        var date;
+        var inner_html = "<ul data-role='listview'>";
+        for ( var i in rides ) {
+          var ride = rides[i];
+
+          var departure_at = ride['departure_at'].split(" ");
+
+          if(date != departure_at[0]) {
+            date = departure_at[0];
+            inner_html += "<li data-role='list-divider'>" + date + "</li>";
+          }
+
+          var dateArr = departure_at[0].split("-");
+          var timeArr = departure_at[1].split(":");
+
+          var approved;
+
+          for (var j in ride['passengers']) {
+            var passenger = ride['passengers'][j];
+            if (passenger['name'] == name && passenger['hp'] == hp) {
+              approved = passenger['approved'];
+            }
+          }
+
+          var approved_text;
+
+          if (approved == 0) {
+            approved_text = "승인안됨";
+          } else {
+            approved_text = "승인됨";
+          }
+
+          inner_html += "<li>[" + ride['origin'] + "] -> [" + ride['destination'] + "] ";
+          inner_html += timeArr[0] + "시 " + timeArr[1] + "분 " + ride['driver_name'] + "<div style='float: right;'>" + approved_text + " <a href='#' onclick='carpoolDeletePassenger(" + passenger['idx'] + ");'>신청취소</a></div></li>";
+        }
+
+        inner_html += "</ul>";
+        $('#myapplylist-result').html(inner_html);
+        $('#myapplylist-result').enhanceWithin();
+      }
+    ).error(ajaxError);
+  });
+  </script>
+</div>
+<!-- page: btjcarpool-myapply-list -->

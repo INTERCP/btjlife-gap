@@ -1,0 +1,24 @@
+<!-- 카풀-이용신청(운행 목록) -->
+<!-- page: btjcarpool-ridelist -->
+<div data-role="page" id="btjcarpool-ridelist">
+  <div data-role="header" data-position="fixed">
+    <a href="#home" class="ui-btn ui-corner-all  ui-btn-left ui-btn-icon-notext ui-icon-arrow-l">뒤로</a>
+    <h1>운행 목록</h1>
+    <a href="#right" class="ui-btn ui-corner-all  ui-btn-right ui-btn-icon-notext ui-icon-bars">메뉴</a>
+  </div>
+  <div role="main" class="ui-content">
+    <ul data-role="listview" id="ridelist-result">
+      <li>신청 가능한 카풀 운행이 없습니다.</li>
+    </ul>
+  </div>
+  <script>
+  // 이용신청하기 (운행 목록) 페이지
+  $( "#btjcarpool-ridelist" ).on( "pageshow", function( event ) {
+    resultContainer = "#ridelist-result";
+    bindFunc = to_ride;
+    getListItem = getRideListItem;
+    $.get(base_url + "rides", proccessRideList).error(ajaxError);
+  });
+  </script>
+</div>
+<!-- page: btjcarpool-ridelist -->

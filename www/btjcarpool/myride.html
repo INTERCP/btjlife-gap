@@ -1,0 +1,77 @@
+<!-- 카풀-나의 운행 현황-상세 -->
+<!-- page: btjcarpool-myride -->
+<div data-role="page" id="btjcarpool-myride">
+  <div data-role="header" data-position="fixed">
+    <a href="myridelist.html" class="ui-btn ui-corner-all  ui-btn-left ui-btn-icon-notext ui-icon-arrow-l">뒤로</a>
+    <h1>나의 운행 현황</h1>
+    <a href="#right" class="ui-btn ui-corner-all  ui-btn-right ui-btn-icon-notext ui-icon-bars">메뉴</a>
+  </div>
+  <div role="main" class="ui-content">
+    <div id="myride-result"></div>
+    <a href="editride.html" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-left ui-icon-edit">편집</a>
+    <a href="#" onclick="carpoolDeleteRide();" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-left ui-icon-delete">삭제</a>
+    <br/>
+    <h2>탑승자 목록</h2>
+    <ul data-role="listview" id="passenger-list"></ul>
+    <br/>
+    <h2>승인대기 목록</h2>
+    <ul data-role="listview" id="wait-list"></ul>
+    <br/>
+
+  </div>
+  <script>
+
+  // 나의 운행 현황 페이지
+  $( "#btjcarpool-myride" ).on( "pageshow", function( event ) {
+    $.get(base_url + "ride/" + ride_idx, function(ride) {
+      var inner_html = getRideData(ride);
+      $('#myride-result').html(inner_html);
+      $('#myride-result').enhanceWithin();
+
+      inner_html = "";
+      for ( var i in ride['passengers'] ) {
+        var passenger = ride['passengers'][i];
+
+        if(passenger['approved'] == 1) {
+          inner_html += "<li>" + passenger['name'] + ' '
+          + passenger['hp'] + ' '
+          + passenger['sex']
+          + "<div style='float: right;'><a class='toggle_approved' data-idx='" + passenger['idx'] + "'>취소</a></div>" + "</li>";
+        }
+      }
+      $('#passenger-list').html(inner_html);
+      $('#passenger-list').listview('refresh');
+
+      inner_html = "";
+      for ( var i in ride['passengers'] ) {
+        var passenger = ride['passengers'][i];
+
+        if(passenger['approved'] == 0) {
+          inner_html += "<li>" + passenger['name'] + ' '
+          + passenger['hp'] + ' '
+          + passenger['sex']
+          + "<div style='float: right;'><a class='toggle_approved' data-idx='" + passenger['idx'] + "'>승인</a></div>" + "</li>";
+        }
+      }
+      $('#wait-list').html(inner_html);
+      $('#wait-list').listview('refresh');
+    }).done(function() {
+      $(".toggle_approved").on("click", function(event) {
+        event.preventDefault();
+
+        passenger_idx = $(this).attr("data-idx");
+        $.get(base_url + "toggle-approved/" + passenger_idx, function(data) {
+          if(data == "1") {
+            // refresh
+            $( "#btjcarpool-myride" ).trigger("pageshow");
+            $("#btjcarpool-myride").listview("refresh");
+          } else {
+            alert("server error!");
+          }
+        }).error(ajaxError);
+      });
+    }).error(ajaxError);
+  });
+  </script>
+</div>
+<!-- page: btjcarpool-myride -->
